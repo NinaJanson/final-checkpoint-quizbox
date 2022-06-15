@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import PlayQuizboxView from "../views/PlayQuizboxView.vue";
 import BrowseQuestionsView from "../views/BrowseQuestionsView.vue";
+import QuizboxSessionView from "../views/QuizboxSessionView.vue";
 
 const routes = [
   {
@@ -17,6 +18,11 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     // component: () =>
     // import(/* webpackChunkName: "about" */../views/BrowseQuestionsView.vueue"),
+  },
+  {
+    path: "/quizsession",
+    name: "quiz-session",
+    component: QuizboxSessionView,
   },
 ];
 

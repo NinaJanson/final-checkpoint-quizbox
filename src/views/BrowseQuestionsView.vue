@@ -18,18 +18,13 @@
 </template>
 
 <script>
+import { topics } from "./../topics";
 export default {
   data() {
     return {
       questions: [],
       selectedOption: "",
-      options: [
-        { text: "HTML and CSS Basics", value: "basics-html-css" },
-        { text: "HTML and CSS Advanced", value: "advanced-html-css" },
-        { text: "JavaScrips Basics", value: "basics-js" },
-        { text: "First JavaScrips Web App", value: "first-js-web-app" },
-        { text: "Terminal and Shell", value: "terminal-and-shell" },
-      ],
+      options: topics,
     };
   },
 
@@ -43,7 +38,6 @@ export default {
 
       this.questions = await response.json();
       this.questions = this.questions.questions;
-      console.log(this.questions.questions);
     },
 
     //   showQuestion() {

@@ -4,6 +4,7 @@
     <router-link :to="{ name: 'browse-questions' }"
       >Browse Questions</router-link
     >
+    <router-link :to="{ name: 'quiz-session' }"></router-link>
   </nav>
   <router-view />
 </template>
