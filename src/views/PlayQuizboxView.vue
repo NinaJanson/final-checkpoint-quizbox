@@ -65,7 +65,7 @@ export default {
 
         this.questions = await response.json();
         this.questions = this.questions.questions;
-        // console.log(this.questions);
+        console.log(this.questions);
         // console.log(this.questions.length);
       }
     },
