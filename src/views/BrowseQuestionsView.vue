@@ -9,7 +9,8 @@
       {{ option.text }}
     </option>
   </select>
-  <p>Questions from the chapter</p>
+  <p>Questions from the chapter:</p>
+  <p>{{ questions.length }}</p>
 
   <ul>
     <li v-for="question in questions" :key="question">{{ question }}</li>
