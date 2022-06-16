@@ -23,8 +23,11 @@
         :id="'checkbox' + index"
         :checked="category.checked"
         :true-value="category.value"
+        false-value=""
       />
-      <label :for="'checkbox' + index">{{ index }} - {{ category.text }}</label>
+      <label :for="'checkbox' + index"
+        >{{ category.text }} {{ zzz[index] }}</label
+      >
     </li>
   </ul>
   {{ checkedItems }}
@@ -52,6 +55,7 @@ export default {
       ],
       categories: topics,
       checkedItems: {},
+      zzz: [],
     };
   },
 
@@ -64,10 +68,12 @@ export default {
         );
 
         this.questions = await response.json();
-        this.questions = this.questions.questions;
-        console.log(this.questions);
-        // console.log(this.questions.length);
+        //this.questions = this.questions.questions);
+        // console.log(this.questions);
+        this.zzz.push(this.questions.questions.length);
+        console.log(this.questions.questions.length);
       }
+      console.log(this.zzz);
     },
 
     startQuiz() {
