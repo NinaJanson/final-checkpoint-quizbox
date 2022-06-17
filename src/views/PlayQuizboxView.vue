@@ -1,8 +1,4 @@
 <template>
-  <!-- <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-   // <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div> -->
   <div class="about">
     <h1>PLAY QUIZBOX</h1>
     <p>Quiz time - test what you know</p>
@@ -22,18 +18,14 @@
         name="checkbox"
         :id="'checkbox' + index"
         :checked="category.checked"
-        :true-value="category.value"
-        false-value=""
+        :true-value="category"
       />
       <label :for="'checkbox' + index"
-        >{{ category.text }} {{ zzz[index] }}</label
+        >{{ category.text }} {{ category.length }}</label
       >
     </li>
   </ul>
-  {{ checkedItems }}
-  {{ selectedOption }}
-  <button @click="startQuiz">Start Quiz</button>
-  <p></p>
+  <button :disabled="isDisabled" @click="startQuiz">Start Quiz</button>
 </template>
 
 <script>
@@ -47,43 +39,70 @@ export default {
   data() {
     return {
       questions: [],
-      selectedOption: "",
+      selectedOption: 0,
       options: [
         { text: "questions", value: 10 },
         { text: "questions", value: 20 },
         { text: "questions", value: 30 },
       ],
       categories: topics,
-      checkedItems: {},
-      zzz: [],
+      checkedItems: [],
+
+      numOfQuestionsPerTopic: [],
     };
   },
 
   methods: {
     async fetchQuestions() {
       for (let i = 0; i < topics.length; i++) {
-        //console.log(this.categories[i].value);
         const response = await fetch(
           `https://raw.githubusercontent.com/coding-bootcamps-eu/quizbox/main/questions/${this.categories[i].value}.json`
         );
 
         this.questions = await response.json();
-        //this.questions = this.questions.questions);
-        // console.log(this.questions);
-        this.zzz.push(this.questions.questions.length);
-        console.log(this.questions.questions.length);
+
+        this.numOfQuestionsPerTopic.push(this.questions.questions.length);
+        this.categories[i].length = this.questions.questions.length;
       }
-      console.log(this.zzz);
     },
 
     startQuiz() {
+      let parameters = [];
+      for (let i = 0; i < Object.keys(this.checkedItems).length; i++) {
+        if (Object.values(this.checkedItems)[i] !== false) {
+          parameters.push(Object.keys(this.checkedItems)[i]);
+        }
+      }
+
+      const query = {};
+      if (parameters.length !== 0) {
+        query.selected = parameters.join(",");
+      }
+      if (this.selectedOption.length !== 0) {
+        query.num = this.selectedOption;
+      }
       router.push({
         name: "quiz-session",
-        query: {
-          selected: Object.keys(this.checkedItems).join(","),
-          num: this.selectedOption,
-        },
+        query: query,
       });
+    },
+  },
+  computed: {
+    totalQuestionsCount() {
+      let sum = 0;
+      this.checkedItems.forEach((el) => {
+        if (el) {
+          sum += el.length;
+        }
+      });
+      return sum;
+    },
+
+    isDisabled() {
+      if (this.selectedOption === 0) {
+        return true;
+      }
+      return !(this.totalQuestionsCount >= this.selectedOption);
     },
   },
 
