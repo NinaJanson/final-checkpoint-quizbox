@@ -1,20 +1,26 @@
 <template>
-  <h1>Quizbox Session</h1>
-  <p>{{ subTitle }}</p>
-
+  <div class="title-subtitle">
+    <h2>Quizbox Session</h2>
+    <span class="subtitle">{{ subTitleOne }}</span>
+    <span class="subtitle">{{ subTitleTwo }}</span>
+  </div>
   <div v-if="this.count < this.totalNumber">
-    <p>V-IF {{ finalQuestions[count] }}</p>
+    <p class="question">{{ finalQuestions[count] }}</p>
 
     <button @click="nextQuestion">Next Question</button>
   </div>
   <div v-else>
-    <p>Congrats!</p>
-    <button>Finished</button>
+    <p class="question">
+      Congratulations! <br />
+      You finished the Quizbox session.
+    </p>
+    <button @click="backToHomePage">Finished</button>
   </div>
 </template>
 
 <script>
 import { topics } from "./../topics";
+import router from "@/router";
 export default {
   name: "QuizboxSessionView",
   data() {
@@ -29,7 +35,8 @@ export default {
       count: 0,
       shuffledQuestions: [],
       // buttonText: "Next",
-      subTitle: "",
+      subTitleOne: "",
+      subTitleTwo: "",
       text: "",
     };
   },
@@ -43,9 +50,8 @@ export default {
 
     this.totalNumber = this.$route.query.num;
 
-    this.subTitle =
-      "Question count: " + (this.count + 1) + "/" + this.totalNumber;
-
+    this.subTitleOne = "Question count: ";
+    this.subTitleTwo = this.count + 1 + "/" + this.totalNumber;
     await this.fetchQuestions();
     await this.numOfQuestionsPerTopic();
   },
@@ -94,18 +100,15 @@ export default {
     nextQuestion() {
       if (this.count < this.totalNumber - 1) {
         this.count++;
-        // this.buttonText = "Next";
-        this.subTitle =
-          "Question count: " +
-          (this.count + 1) +
-          "/" +
-          this.finalQuestions.length;
-        // this.text = this.finalQuestions[this.count - 1];
+        this.buttonText = "Next";
+        this.subTitleOne = "Question count:";
+        this.subTitleTwo = this.count + 1 + "/" + this.finalQuestions.length;
+        this.text = this.finalQuestions[this.count - 1];
       } else {
         this.count = this.totalNumber;
-        // this.buttonText = "Finished";
-        this.subTitle = "Session finished";
-        // this.text = "Congratulations! You finished the Quizbox Session";
+        this.subTitleOne = "Session finished";
+        this.subTitleTwo = "";
+        //this.text = "Congratulations! You finished the Quizbox Session";
       }
       this.finishText();
     },
@@ -122,25 +125,26 @@ export default {
         }
       }
     },
-
-    // computed: {
-    //   buttonText() {
-    //     console.log("buttontext");
-    //     if (this.count < this.totalNumber) {
-    //       return "Next Question";
-    //     } else {
-    //       return "Finished";
-    //     }
-    //   },
-    // },
-
-    // computed: {
-    //   text() {
-    //     if (this.count < this.totalQuestions) {
-    //       return this.finalQuestions[this.count - 1];
-    //     }
-    //   },
-    // },
+    backToHomePage() {
+      router.push({
+        name: "quizbox",
+      });
+    },
   },
 };
 </script>
+
+<style scoped>
+span + span {
+  margin: 2rem;
+}
+.question {
+  font-weight: bold;
+  font-size: 1.3rem;
+  text-align: center;
+  height: 7rem;
+  margin: 5rem 0 0 0;
+  align-content: center;
+  justify-content: center;
+}
+</style>
