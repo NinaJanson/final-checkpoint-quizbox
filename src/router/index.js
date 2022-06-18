@@ -5,7 +5,7 @@ import QuizboxSessionView from "../views/QuizboxSessionView.vue";
 
 const routes = [
   {
-    path: "/",
+    path: "/play-quizbox",
     name: "quizbox",
     component: PlayQuizboxView,
   },
@@ -13,11 +13,6 @@ const routes = [
     path: "/browse-questions",
     name: "browse-questions",
     component: BrowseQuestionsView,
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    // component: () =>
-    // import(/* webpackChunkName: "about" */../views/BrowseQuestionsView.vueue"),
   },
   {
     path: "/quizsession",

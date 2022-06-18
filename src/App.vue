@@ -24,7 +24,7 @@
     </div>
     <h1 id="title">QUIZBOX</h1>
     <nav>
-      <router-link :to="{ name: 'quizbox' }">Quizbox</router-link>
+      <router-link :to="{ name: 'quizbox' }">Play Quizbox</router-link>
       <router-link :to="{ name: 'browse-questions' }"
         >Browse Questions</router-link
       >
@@ -53,6 +53,7 @@ html {
   --font-family-Montserrat: "Montserrat", sans-serif;
   --color-violet: #6a1cc3;
   --color-violet2: #8849cf;
+  --color-white: #fbfbfb;
 }
 
 body {
@@ -69,14 +70,14 @@ body {
 #header {
   position: relative;
   padding: 30px;
-  background-color: #6a1cc3;
+  background-color: var(--color-violet);
 }
 
 .header_bottom {
   position: absolute;
   width: 100%;
   height: 1.2rem;
-  background-color: white;
+  background-color: var(--color-white);
   bottom: 0;
   left: 0;
 }
@@ -90,33 +91,32 @@ body {
   position: absolute;
   left: 0;
   color: var(--color-violet2);
-  background-color: var(--color-white);
+  background-color: var(--color-var(--color-white));
   transform: translateY(100%);
 }
 
 main {
   max-width: 35ch;
-  _margin: 1.5em;
   padding-bottom: 5rem;
   padding-left: 0.8rem;
   margin: 1.5rem auto;
 }
 
 #title {
-  color: white;
+  color: var(--color-white);
   text-align: center;
 }
 
 nav a {
   font-weight: bold;
-  color: white;
+  color: var(--color-white);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 nav a.router-link-exact-active {
-  color: var(--color-violet2);
+  color: var(--color-white);
 }
 h2 {
   color: var(--color-violet);
@@ -134,15 +134,34 @@ h2 {
   margin-bottom: 1.5rem;
 }
 
+.dropdown-container {
+  position: relative;
+  border: #6a1cc3 solid 1.78px;
+}
+
+.dropdown-container:hover {
+  cursor: pointer;
+}
+
 .dropdown {
   all: unset;
   display: inline-block;
-  border: #6a1cc3 solid 1.78px;
+
   border-radius: 2px;
   font-weight: bold;
   width: 90%;
   flex-grow: 2;
   padding: 0.3rem 0.8rem;
+}
+.dropdown-arrow {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 25px;
+  height: 30px;
+  fill: var(--color-white);
+  background-color: var(--color-violet);
+  pointer-events: none;
 }
 .amount-questions {
   display: flex;
