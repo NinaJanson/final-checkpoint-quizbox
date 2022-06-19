@@ -1,28 +1,55 @@
 <template>
-  <div class="about">
-    <h1>PLAY QUIZBOX</h1>
-    <p>Quiz time - test what you know</p>
+  <div class="title-subtitle">
+    <h2>PLAY QUIZBOX</h2>
+    <p class="subtitle">Quiz time - test what you know</p>
   </div>
-  <select v-model="selectedOption" class="topic-selection" name="" id="topic">
-    <option v-for="option in options" :key="option" :value="option.value">
-      {{ option.value }} {{ option.text }}
-    </option>
-  </select>
-  <p>Question areas:</p>
-  <p>{{ categories.length }}</p>
-  <ul>
-    <li v-for="(category, index) in categories" :key="category">
+  <div class="dropdown-container">
+    <select v-model="selectedOption" class="dropdown" name="" id="topic">
+      <option v-for="option in options" :key="option" :value="option.value">
+        {{ option.value }} {{ option.text }}
+      </option>
+    </select>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      fill="currentColor"
+      class="bi bi-chevron-compact-down dropdown-arrow"
+      viewBox="0 0 16 16"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z"
+      />
+    </svg>
+  </div>
+  <section class="amount-questions">
+    <span>Question areas:</span>
+    <span>{{ categories.length }}</span>
+  </section>
+  <ul class="list">
+    <li
+      class="list-topics"
+      v-for="(category, index) in categories"
+      :key="category"
+    >
       <input
         v-model="checkedItems[index]"
         type="checkbox"
         name="checkbox"
+        class="checkbox"
         :id="'checkbox' + index"
         :checked="category.checked"
         :true-value="category"
       />
-      <label :for="'checkbox' + index"
-        >{{ category.text }} {{ category.length }}</label
-      >
+      <div class="label-div">
+        <label class="label-topic" :for="'checkbox' + index"
+          >{{ category.text }}
+        </label>
+        <label class="label-questions" :for="'checkbox' + index"
+          >Questions {{ category.length }}</label
+        >
+      </div>
     </li>
   </ul>
   <button :disabled="isDisabled" @click="startQuiz">Start Quiz</button>
@@ -109,8 +136,48 @@ export default {
   async created() {
     await this.fetchQuestions();
   },
-  // components: {
-  //   HelloWorld,
-  // },
 };
 </script>
+
+<style scoped>
+.list {
+  all: unset;
+}
+.list-topics {
+  all: unset;
+  display: flex;
+  flex-direction: row;
+  margin-left: 1rem;
+  align-content: baseline;
+}
+.list .list-topics {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.87);
+  gap: 1rem;
+}
+
+.label-div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+.label-topic {
+  font-weight: 600;
+}
+
+.label-questions {
+  font-size: 0.8rem;
+}
+.checkbox {
+  all: unset;
+  border: #8849cf 1px solid;
+  min-width: 1.2rem;
+  max-height: 1.2rem;
+  border-radius: 2px;
+  margin-top: 0.5rem;
+}
+
+.checkbox:checked {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' aria-hidden='true' focusable='false' %3E%3Cpath fill='none' stroke='rgba(136, 73, 207, 1)' stroke-width='2.5' d='M1.73 12.91l6.37 6.37L22.79 4.59' /%3E%3C/svg%3E");
+}
+</style>
