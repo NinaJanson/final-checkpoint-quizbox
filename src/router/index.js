@@ -5,7 +5,7 @@ import QuizboxSessionView from "../views/QuizboxSessionView.vue";
 
 const routes = [
   {
-    path: "/play-quizbox",
+    path: "/",
     name: "quizbox",
     component: PlayQuizboxView,
   },
